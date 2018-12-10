@@ -13,8 +13,5 @@ Compile your model with focal loss as sample:
 **Categorical**
 >model.compile(loss=[categorical_focal_loss(alpha=.25, gamma=2)], metrics=["accuracy"], optimizer=adam)
 
-## Experiments
-
-
 ## References
 * The binary implementation is based [@mkocabas' code](https://github.com/mkocabas/focal-loss-keras) 
