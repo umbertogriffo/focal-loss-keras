@@ -1,7 +1,10 @@
-"""Define our custom loss function.
+"""
+Define our custom loss function.
 """
 from keras import backend as K
 import tensorflow as tf
+
+import dill
 
 
 def binary_focal_loss(gamma=2., alpha=.25):
@@ -18,7 +21,7 @@ def binary_focal_loss(gamma=2., alpha=.25):
      model.compile(loss=[binary_focal_loss(alpha=.25, gamma=2)], metrics=["accuracy"], optimizer=adam)
 
     """
-    def focal_loss_fixed(y_true, y_pred):
+    def binary_focal_loss_fixed(y_true, y_pred):
         """
         :param y_true: A tensor of the same shape as `y_pred`
         :param y_pred:  A tensor resulting from a sigmoid
@@ -35,7 +38,7 @@ def binary_focal_loss(gamma=2., alpha=.25):
         return -K.sum(alpha * K.pow(1. - pt_1, gamma) * K.log(pt_1)) \
                -K.sum((1 - alpha) * K.pow(pt_0, gamma) * K.log(1. - pt_0))
 
-    return focal_loss_fixed
+    return binary_focal_loss_fixed
 
 
 def categorical_focal_loss(gamma=2., alpha=.25):
@@ -54,7 +57,7 @@ def categorical_focal_loss(gamma=2., alpha=.25):
     Usage:
      model.compile(loss=[categorical_focal_loss(alpha=.25, gamma=2)], metrics=["accuracy"], optimizer=adam)
     """
-    def focal_loss_fixed(y_true, y_pred):
+    def categorical_focal_loss_fixed(y_true, y_pred):
         """
         :param y_true: A tensor of the same shape as `y_pred`
         :param y_pred: A tensor resulting from a softmax
@@ -75,4 +78,14 @@ def categorical_focal_loss(gamma=2., alpha=.25):
 
         return -K.sum(loss, -1)
 
-    return focal_loss_fixed
+    return categorical_focal_loss_fixed
+
+
+if __name__ == '__main__':
+    # Test serialization of nested functions
+    bin_inner = dill.loads(dill.dumps(binary_focal_loss(gamma=2., alpha=.25)))
+    print(bin_inner)
+
+    cat_inner = dill.loads(dill.dumps(categorical_focal_loss(gamma=2., alpha=.25)))
+    print(cat_inner)
+
