@@ -30,12 +30,12 @@ custom_object = {'binary_focal_loss_fixed': dill.loads(dill.dumps(binary_focal_l
 ```                 
 and modify the beginning of **load_model** method as follow:
 ``` python
-    if not Path(input_model_path).exists():
-        raise FileNotFoundError(
-            'Model file `{}` does not exist.'.format(input_model_path))
-    try:
-        model = keras.models.load_model(input_model_path, custom_objects=custom_object)
-        return model
+if not Path(input_model_path).exists():
+    raise FileNotFoundError(
+        'Model file `{}` does not exist.'.format(input_model_path))
+try:
+    model = keras.models.load_model(input_model_path, custom_objects=custom_object)
+    return model
 ```
 
 ## References
