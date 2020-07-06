@@ -10,7 +10,6 @@ import unittest
 class TestFocalLoss(unittest.TestCase):
 
     def test_is_equal_to_categorical_cross_entropy_pixel_based(self):
-
         # Pixel-based batch size
         y_true = np.array([[0, 1, 0], [0, 0, 1]])
         y_pred = np.array([[0.05, 0.95, 0], [0.1, 0.8, 0.1]])
