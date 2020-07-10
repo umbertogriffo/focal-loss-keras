@@ -2,9 +2,9 @@ import numpy as np
 import tensorflow as tf
 from keras import backend as K
 
-from losses import categorical_focal_loss
-
 import unittest
+
+from loss_function.losses import categorical_focal_loss
 
 
 class TestFocalLoss(unittest.TestCase):

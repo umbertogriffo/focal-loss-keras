@@ -20,5 +20,5 @@ export-env:
 	pip3 freeze > requirements.txt
 
 test:
-	. .pyenv/bin/activate && cd src/tblx_pdm/tests; \
+	. .pyenv/bin/activate && cd src/test; \
 	pytest -s -vv;
