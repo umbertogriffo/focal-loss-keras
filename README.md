@@ -11,7 +11,9 @@ Compile your model with focal loss as sample:
 >model.compile(loss=[binary_focal_loss(alpha=.25, gamma=2)], metrics=["accuracy"], optimizer=adam)
 
 **Categorical**
->model.compile(loss=[categorical_focal_loss(alpha=.25, gamma=2)], metrics=["accuracy"], optimizer=adam)
+>model.compile(loss=[categorical_focal_loss(alpha=[[.25, .25, .25]], gamma=2)], metrics=["accuracy"], optimizer=adam)
+
+Alpha is used to specify the weight of different categories/labels, the size of the array needs to be consistent with the number of classes.
 
 **Convert a trained keras model into an inference tensorflow model**
 
@@ -24,7 +26,7 @@ then modify **keras_to_tensorflow.py** adding this piece of code after the impor
 ``` python
 import dill
 custom_object = {'binary_focal_loss_fixed': dill.loads(dill.dumps(binary_focal_loss(gamma=2., alpha=.25))),
-                 'categorical_focal_loss_fixed': dill.loads(dill.dumps(categorical_focal_loss(gamma=2., alpha=.25))),
+                 'categorical_focal_loss_fixed': dill.loads(dill.dumps(categorical_focal_loss(gamma=2., alpha=[[.25, .25, .25]]))),
                  'categorical_focal_loss': categorical_focal_loss,
                  'binary_focal_loss': binary_focal_loss}
 ```                 
