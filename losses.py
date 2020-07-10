@@ -1,6 +1,7 @@
 """
 Define our custom loss function.
 """
+import numpy as np
 from keras import backend as K
 import tensorflow as tf
 
@@ -41,10 +42,11 @@ def binary_focal_loss(gamma=2., alpha=.25):
     return binary_focal_loss_fixed
 
 
-def categorical_focal_loss(gamma=2., alpha=.25):
+def categorical_focal_loss(alpha, gamma=2.):
     """
     Softmax version of focal loss.
-
+    When there is a skew between different categories/labels in your data set, you can try to apply this function as a
+    loss.
            m
       FL = ∑  -alpha * (1 - p_o,c)^gamma * y_o,c * log(p_o,c)
           c=1
@@ -52,7 +54,8 @@ def categorical_focal_loss(gamma=2., alpha=.25):
       where m = number of classes, c = class and o = observation
 
     Parameters:
-      alpha -- the same as weighing factor in balanced cross entropy
+      alpha -- the same as weighing factor in balanced cross entropy. Alpha is used to specify the weight of different
+      categories/labels, the size of the array needs to be consistent with the number of classes.
       gamma -- focusing parameter for modulating factor (1-p)
 
     Default value:
@@ -64,8 +67,11 @@ def categorical_focal_loss(gamma=2., alpha=.25):
         https://www.tensorflow.org/api_docs/python/tf/keras/backend/categorical_crossentropy
 
     Usage:
-     model.compile(loss=[categorical_focal_loss(alpha=.25, gamma=2)], metrics=["accuracy"], optimizer=adam)
+     model.compile(loss=[categorical_focal_loss(alpha=[[.25, .25, .25]], gamma=2)], metrics=["accuracy"], optimizer=adam)
     """
+
+    alpha = np.array(alpha, dtype=np.float32)
+
     def categorical_focal_loss_fixed(y_true, y_pred):
         """
         :param y_true: A tensor of the same shape as `y_pred`
