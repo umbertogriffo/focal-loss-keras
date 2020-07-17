@@ -4,13 +4,32 @@ from keras import backend as K
 
 import unittest
 
-from loss_function.losses import categorical_focal_loss
+from loss_function.losses import categorical_focal_loss, binary_focal_loss
 
 
 class TestFocalLoss(unittest.TestCase):
 
+    def test_is_equal_to_binary_cross_entropy(self):
+        """ When alpha is equal to 1 and gamma is equal to 0 the focal loss must be equal to
+            the binary crossentropy loss with 'sample_weight' = [1, 0]."""
+        y_true = np.array([[0., 1.], [0., 0.]])
+        y_pred = np.array([[0.6, 0.4], [0.4, 0.6]], dtype=np.float32)
+
+        print("binary_cross_entropy")
+        bce = tf.keras.losses.BinaryCrossentropy()
+        bce_value = K.mean(bce(y_true, y_pred, sample_weight=[1, 0])).numpy()
+        print(bce_value)
+
+        print("focal_loss")
+        bfl = binary_focal_loss(alpha=1, gamma=0.)
+        bfl_value = K.mean(bfl(y_true, y_pred)).numpy()
+        print(bfl_value)
+
+        self.assertAlmostEquals(bce_value, bfl_value, places=4)
+
     def test_is_equal_to_categorical_cross_entropy_pixel_based(self):
-        # Pixel-based batch size
+        """ When alpha is equal to 1 and gamma is equal to 0 the focal loss of a Pixel-based batch size must be equal to
+            the categorical crossentropy loss."""
         y_true = np.array([[0, 1, 0], [0, 0, 1]])
         y_pred = np.array([[0.05, 0.95, 0], [0.1, 0.8, 0.1]], dtype=np.float32)
 
@@ -31,7 +50,8 @@ class TestFocalLoss(unittest.TestCase):
         self.assertEqual(cce_value, cfl_value)
 
     def test_is_equal_to_categorical_cross_entropy_image_based(self):
-        # Image based batch size
+        """ When alpha is equal to 1 and gamma is equal to 0 the focal loss of a Image based batch size must be equal to
+            the categorical crossentropy loss."""
         y_true = np.array([[[[1, 0, 0, 0], [0, 1, 0, 0]], [[0, 0, 0, 1], [0, 0, 1, 0]]],
                            [[[0, 1, 0, 0], [0, 1, 0, 0]], [[1, 0, 0, 0], [0, 0, 0, 1]]]])
 
@@ -81,5 +101,3 @@ class TestFocalLoss(unittest.TestCase):
         print(cfl_unbalanced_value)
 
         self.assertGreater(cfl_unbalanced_value, cfl_balanced_value)
-
-
