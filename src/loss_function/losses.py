@@ -90,9 +90,6 @@ def categorical_focal_loss(alpha, gamma=2.):
         :return: Output tensor.
         """
 
-        # Scale predictions so that the class probas of each sample sum to 1
-        y_pred /= K.sum(y_pred, axis=-1, keepdims=True)
-
         # Clip the prediction value to prevent NaN's and Inf's
         epsilon = K.epsilon()
         y_pred = K.clip(y_pred, epsilon, 1. - epsilon)
