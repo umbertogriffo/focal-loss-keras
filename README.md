@@ -1,6 +1,6 @@
 ## Focal Loss
 
-![CI](https://github.com/umbertogriffo/focal-loss-keras/workflows/Python%20application/badge.svg)
+![CI](https://github.com/umbertogriffo/focal-loss-keras/workflows/CI/badge.svg)
 
 [focal loss](https://arxiv.org/abs/1708.02002) down-weights the well-classified examples. This has the net effect of putting more training emphasis on that data that is hard to classify. In a practical setting where we have a data imbalance, our majority class will quickly become well-classified since we have much more data for it. Thus, in order to insure that we also achieve high accuracy on our minority class, we can use the focal loss to give those minority class examples more relative weight during training.
 ![](https://github.com/umbertogriffo/focal-loss-keras/blob/master/focal_loss.png)
