@@ -20,7 +20,7 @@ protobuf==3.12.2
 py==1.9.0
 pyparsing==2.4.7
 pytest==5.4.1
-PyYAML==5.3.1
+PyYAML==5.4
 scipy==1.4.1
 six==1.15.0
 tensorboard==2.2.2
