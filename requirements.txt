@@ -17,7 +17,7 @@ opt-einsum==3.2.1
 packaging==20.4
 pluggy==0.13.1
 protobuf==3.12.2
-py==1.9.0
+py==1.10.0
 pyparsing==2.4.7
 pytest==5.4.1
 PyYAML==5.3.1
