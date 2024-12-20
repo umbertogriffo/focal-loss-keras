@@ -43,5 +43,10 @@ try:
     return model
 ```
 
+## Who is citing this work?
+
+* In the open-source Python library[AUCMEDI](https://frankkramer-lab.github.io/aucmedi/), a high-level API that allows fast setup of medical image classification pipelines with state-of-the-art methods in just a few lines of code.
+	* [Loss Functions](https://frankkramer-lab.github.io/aucmedi/reference/neural_network/loss_functions/)
+
 ## References
 * The binary implementation is based [@mkocabas's code](https://github.com/mkocabas/focal-loss-keras) 
